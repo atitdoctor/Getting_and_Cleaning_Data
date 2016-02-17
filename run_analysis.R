@@ -38,14 +38,20 @@ colNames  = colnames(finalData);
 
 
 # 2. Extract only the measurements on the mean and standard deviation for each measurement. 
-## LogicalVector that has TRUE values for the ID, mean() & stddev() columns and FALSE for others
+## Vector that has TRUE values for the ID, mean() & stddev() columns and FALSE for others
 logVector = (grepl("activity..",colNames) | grepl("subject..",colNames) | grepl("-mean..",colNames) & !grepl("-meanFreq..",colNames) & !grepl("mean..-",colNames) | grepl("-std..",colNames) & !grepl("-std()..-",colNames));
 
-## Subset finalData table based on the logicalVector to keep only required columns
+## Subset finalData table based on the Vector to keep only required columns
 finalData = finalData[logVector==TRUE];
 
 
 # 3. Use descriptive activity names to name the activities in the data set
+## Merge the finalData set with the acitivityType table to include descriptive activity names
+finalData = merge(finalData,activityType,by='activityId',all.x=TRUE);
+
+## Updating the colNames vector to include the new column names after merge
+colNames  = colnames(finalData); 
+
 
 # 4. Appropriately label the data set with descriptive activity names. 
 
