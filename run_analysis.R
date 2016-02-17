@@ -15,10 +15,10 @@ colnames(subjectTrain)  = "subjectId";
 colnames(xTrain)        = features[,2]; 
 colnames(yTrain)        = "activityId";
 
-# Create the final training set by merging yTrain, subjectTrain, and xTrain
+## Create the final training set by merging yTrain, subjectTrain, and xTrain
 trainingData = cbind(yTrain,subjectTrain,xTrain);
 
-# Read in the test data and assigning column names to the test data
+## Read in the test data and assigning column names to the test data
 subjectTest = read.table('./test/subject_test.txt',header=FALSE);
 xTest       = read.table('./test/x_test.txt',header=FALSE);
 yTest       = read.table('./test/y_test.txt',header=FALSE);
@@ -27,17 +27,24 @@ colnames(subjectTest) = "subjectId";
 colnames(xTest)       = features[,2]; 
 colnames(yTest)       = "activityId";
 
-# Create the final test set by merging the xTest, yTest and subjectTest data
+## Create the final test set by merging the xTest, yTest and subjectTest data
 testData = cbind(yTest,subjectTest,xTest);
 
-# Combine training and test data to create a final data set
+## Combine training and test data to create a final data set
 finalData = rbind(trainingData,testData);
 
-# Create a vector for the column names from the finalData, which will be used to select the desired mean() & stddev() columns
+## Create a vector for the column names from the finalData, which will be used to select the desired mean() & stddev() columns
 colNames  = colnames(finalData); 
 
 
 # 2. Extract only the measurements on the mean and standard deviation for each measurement. 
+
+# LogicalVector that has TRUE values for the ID, mean() & stddev() columns and FALSE for others
+logVector = (grepl("activity..",colNames) | grepl("subject..",colNames) | grepl("-mean..",colNames) & !grepl("-meanFreq..",colNames) & !grepl("mean..-",colNames) | grepl("-std..",colNames) & !grepl("-std()..-",colNames));
+
+# Subset finalData table based on the logicalVector to keep only required columns
+finalData = finalData[logVector==TRUE];
+
 
 # 3. Use descriptive activity names to name the activities in the data set
 
