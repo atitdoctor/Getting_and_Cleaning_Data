@@ -1,3 +1,7 @@
+## Coursera Getting and Cleaning Data Course Project
+## Atit Doctor
+## February 16, 2016
+
 # 1. Merge the training and the test sets to create one data set.
 
 setwd('/Users/adoctor/Documents/UCI HAR Dataset/');
