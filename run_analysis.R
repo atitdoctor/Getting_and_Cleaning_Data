@@ -38,11 +38,10 @@ colNames  = colnames(finalData);
 
 
 # 2. Extract only the measurements on the mean and standard deviation for each measurement. 
-
-# LogicalVector that has TRUE values for the ID, mean() & stddev() columns and FALSE for others
+## LogicalVector that has TRUE values for the ID, mean() & stddev() columns and FALSE for others
 logVector = (grepl("activity..",colNames) | grepl("subject..",colNames) | grepl("-mean..",colNames) & !grepl("-meanFreq..",colNames) & !grepl("mean..-",colNames) | grepl("-std..",colNames) & !grepl("-std()..-",colNames));
 
-# Subset finalData table based on the logicalVector to keep only required columns
+## Subset finalData table based on the logicalVector to keep only required columns
 finalData = finalData[logVector==TRUE];
 
 
